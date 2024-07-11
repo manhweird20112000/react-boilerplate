@@ -9,6 +9,8 @@ function App() {
     },
   });
 
+  const auth: IAuth = {name: 'hi'}
+
   return (
     <>
       <p>{JSON.stringify(data)}</p>

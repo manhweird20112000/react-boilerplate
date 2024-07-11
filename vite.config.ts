@@ -4,7 +4,7 @@ import legacy from "@vitejs/plugin-legacy";
 import { resolve } from "path";
 
 // https://vitejs.dev/config/
-export default ({ mode }) => {
+export default ({ mode }: { mode: never }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
   return defineConfig({
     plugins: [
@@ -13,6 +13,10 @@ export default ({ mode }) => {
         targets: ["defaults", "not IE 11"],
       }),
     ],
+    build: {
+      cssMinify: true,
+      minify: true,
+    },
     resolve: {
       alias: {
         "@": resolve(__dirname, "src"),

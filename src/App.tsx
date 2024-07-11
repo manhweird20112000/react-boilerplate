@@ -1,36 +1,18 @@
-import { useState } from "react";
-import reactLogo from "@/assets/react.svg";
-import viteLogo from "/vite.svg";
-import { formatMoney } from "@/utils/format";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "antd";
 
 function App() {
-  const [count, setCount] = useState(0);
-  console.log(fetch('/api'));
+  const { data, isLoading } = useQuery({
+    queryKey: ["todos"],
+    queryFn: async () => {
+      return (await fetch("/api/todos/1")).json();
+    },
+  });
 
-  formatMoney();
   return (
     <>
-      <div className="bg-red-600">
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <Button type="primary" onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </Button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <p>{JSON.stringify(data)}</p>
+      <Button type="primary">Connect Wallet</Button>
     </>
   );
 }

@@ -6,7 +6,7 @@ import { Button } from "antd";
 
 function App() {
   const [count, setCount] = useState(0);
-  console.log(import.meta.env.VITE_API_URL);
+  console.log(fetch('/api'));
 
   formatMoney();
   return (

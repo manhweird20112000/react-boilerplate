@@ -2,14 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "antd";
 
 function App() {
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ["todos"],
     queryFn: async () => {
       return (await fetch("/api/todos/1")).json();
     },
   });
 
-  const auth: IAuth = {name: 'hi'}
 
   return (
     <>

@@ -2,12 +2,14 @@ import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import legacy from "@vitejs/plugin-legacy";
 import { resolve } from "path";
+import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 
 // https://vitejs.dev/config/
 export default ({ mode }: { mode: never }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
   return defineConfig({
     plugins: [
+      TanStackRouterVite({ routesDirectory: "./src/layouts", generatedRouteTree: './src/infra/generated/route.gen.ts' }),
       react(),
       legacy({
         targets: ["defaults", "not IE 11"],

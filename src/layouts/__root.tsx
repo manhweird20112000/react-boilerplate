@@ -3,6 +3,9 @@ import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { Suspense } from "react";
 
 export const Route = createRootRoute({
+  beforeLoad: () => {
+    console.warn("Add Middleware.");
+  },
   component: () => (
     <>
       <div className="p-2 flex gap-2">

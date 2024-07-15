@@ -17,8 +17,8 @@ import { Route as AuthenticatedImport } from './../../layouts/_authenticated'
 
 // Create Virtual Routes
 
-const LoginLazyImport = createFileRoute('/login')()
 const AuthenticatedIndexLazyImport = createFileRoute('/_authenticated/')()
+const AuthenticatedLoginLazyImport = createFileRoute('/_authenticated/login')()
 const AuthenticatedBlogsIndexLazyImport = createFileRoute(
   '/_authenticated/blogs/',
 )()
@@ -27,11 +27,6 @@ const AuthenticatedBlogsBlogIdLazyImport = createFileRoute(
 )()
 
 // Create/Update Routes
-
-const LoginLazyRoute = LoginLazyImport.update({
-  path: '/login',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./../../layouts/login.lazy').then((d) => d.Route))
 
 const AuthenticatedRoute = AuthenticatedImport.update({
   id: '/_authenticated',
@@ -43,6 +38,13 @@ const AuthenticatedIndexLazyRoute = AuthenticatedIndexLazyImport.update({
   getParentRoute: () => AuthenticatedRoute,
 } as any).lazy(() =>
   import('./../../layouts/_authenticated/index.lazy').then((d) => d.Route),
+)
+
+const AuthenticatedLoginLazyRoute = AuthenticatedLoginLazyImport.update({
+  path: '/login',
+  getParentRoute: () => AuthenticatedRoute,
+} as any).lazy(() =>
+  import('./../../layouts/_authenticated/login.lazy').then((d) => d.Route),
 )
 
 const AuthenticatedBlogsIndexLazyRoute =
@@ -76,12 +78,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedImport
       parentRoute: typeof rootRoute
     }
-    '/login': {
-      id: '/login'
+    '/_authenticated/login': {
+      id: '/_authenticated/login'
       path: '/login'
       fullPath: '/login'
-      preLoaderRoute: typeof LoginLazyImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthenticatedLoginLazyImport
+      parentRoute: typeof AuthenticatedImport
     }
     '/_authenticated/': {
       id: '/_authenticated/'
@@ -111,11 +113,11 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   AuthenticatedRoute: AuthenticatedRoute.addChildren({
+    AuthenticatedLoginLazyRoute,
     AuthenticatedIndexLazyRoute,
     AuthenticatedBlogsBlogIdLazyRoute,
     AuthenticatedBlogsIndexLazyRoute,
   }),
-  LoginLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -126,20 +128,21 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/_authenticated",
-        "/login"
+        "/_authenticated"
       ]
     },
     "/_authenticated": {
       "filePath": "_authenticated.tsx",
       "children": [
+        "/_authenticated/login",
         "/_authenticated/",
         "/_authenticated/blogs/$blogId",
         "/_authenticated/blogs/"
       ]
     },
-    "/login": {
-      "filePath": "login.lazy.tsx"
+    "/_authenticated/login": {
+      "filePath": "_authenticated/login.lazy.tsx",
+      "parent": "/_authenticated"
     },
     "/_authenticated/": {
       "filePath": "_authenticated/index.lazy.tsx",

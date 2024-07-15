@@ -1,5 +1,5 @@
 import { Outlet } from "@tanstack/react-router";
-import { Suspense, useEffect, useId } from "react";
+import { Suspense, useId } from "react";
 
 export function HomeLayout() {
   const id = useId();

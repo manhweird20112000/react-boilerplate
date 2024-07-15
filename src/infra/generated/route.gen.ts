@@ -13,58 +13,96 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './../../layouts/__root'
+import { Route as AuthenticatedImport } from './../../layouts/_authenticated'
 
 // Create Virtual Routes
 
-const IndexLazyImport = createFileRoute('/')()
-const BlogsIndexLazyImport = createFileRoute('/blogs/')()
-const BlogsBlogIdLazyImport = createFileRoute('/blogs/$blogId')()
+const LoginLazyImport = createFileRoute('/login')()
+const AuthenticatedIndexLazyImport = createFileRoute('/_authenticated/')()
+const AuthenticatedBlogsIndexLazyImport = createFileRoute(
+  '/_authenticated/blogs/',
+)()
+const AuthenticatedBlogsBlogIdLazyImport = createFileRoute(
+  '/_authenticated/blogs/$blogId',
+)()
 
 // Create/Update Routes
 
-const IndexLazyRoute = IndexLazyImport.update({
+const LoginLazyRoute = LoginLazyImport.update({
+  path: '/login',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./../../layouts/login.lazy').then((d) => d.Route))
+
+const AuthenticatedRoute = AuthenticatedImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthenticatedIndexLazyRoute = AuthenticatedIndexLazyImport.update({
   path: '/',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./../../layouts/index.lazy').then((d) => d.Route))
-
-const BlogsIndexLazyRoute = BlogsIndexLazyImport.update({
-  path: '/blogs/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthenticatedRoute,
 } as any).lazy(() =>
-  import('./../../layouts/blogs/index.lazy').then((d) => d.Route),
+  import('./../../layouts/_authenticated/index.lazy').then((d) => d.Route),
 )
 
-const BlogsBlogIdLazyRoute = BlogsBlogIdLazyImport.update({
-  path: '/blogs/$blogId',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./../../layouts/blogs/$blogId.lazy').then((d) => d.Route),
-)
+const AuthenticatedBlogsIndexLazyRoute =
+  AuthenticatedBlogsIndexLazyImport.update({
+    path: '/blogs/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any).lazy(() =>
+    import('./../../layouts/_authenticated/blogs/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const AuthenticatedBlogsBlogIdLazyRoute =
+  AuthenticatedBlogsBlogIdLazyImport.update({
+    path: '/blogs/$blogId',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any).lazy(() =>
+    import('./../../layouts/_authenticated/blogs/$blogId.lazy').then(
+      (d) => d.Route,
+    ),
+  )
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedImport
+      parentRoute: typeof rootRoute
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/_authenticated/': {
+      id: '/_authenticated/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexLazyImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthenticatedIndexLazyImport
+      parentRoute: typeof AuthenticatedImport
     }
-    '/blogs/$blogId': {
-      id: '/blogs/$blogId'
+    '/_authenticated/blogs/$blogId': {
+      id: '/_authenticated/blogs/$blogId'
       path: '/blogs/$blogId'
       fullPath: '/blogs/$blogId'
-      preLoaderRoute: typeof BlogsBlogIdLazyImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthenticatedBlogsBlogIdLazyImport
+      parentRoute: typeof AuthenticatedImport
     }
-    '/blogs/': {
-      id: '/blogs/'
+    '/_authenticated/blogs/': {
+      id: '/_authenticated/blogs/'
       path: '/blogs'
       fullPath: '/blogs'
-      preLoaderRoute: typeof BlogsIndexLazyImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthenticatedBlogsIndexLazyImport
+      parentRoute: typeof AuthenticatedImport
     }
   }
 }
@@ -72,9 +110,12 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
-  IndexLazyRoute,
-  BlogsBlogIdLazyRoute,
-  BlogsIndexLazyRoute,
+  AuthenticatedRoute: AuthenticatedRoute.addChildren({
+    AuthenticatedIndexLazyRoute,
+    AuthenticatedBlogsBlogIdLazyRoute,
+    AuthenticatedBlogsIndexLazyRoute,
+  }),
+  LoginLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -85,19 +126,32 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/",
-        "/blogs/$blogId",
-        "/blogs/"
+        "/_authenticated",
+        "/login"
       ]
     },
-    "/": {
-      "filePath": "index.lazy.tsx"
+    "/_authenticated": {
+      "filePath": "_authenticated.tsx",
+      "children": [
+        "/_authenticated/",
+        "/_authenticated/blogs/$blogId",
+        "/_authenticated/blogs/"
+      ]
     },
-    "/blogs/$blogId": {
-      "filePath": "blogs/$blogId.lazy.tsx"
+    "/login": {
+      "filePath": "login.lazy.tsx"
     },
-    "/blogs/": {
-      "filePath": "blogs/index.lazy.tsx"
+    "/_authenticated/": {
+      "filePath": "_authenticated/index.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/blogs/$blogId": {
+      "filePath": "_authenticated/blogs/$blogId.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/blogs/": {
+      "filePath": "_authenticated/blogs/index.lazy.tsx",
+      "parent": "/_authenticated"
     }
   }
 }

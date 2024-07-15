@@ -1,6 +1,6 @@
 import { Button } from "antd";
 
-export function AuthPage() {
+export default function AuthPage() {
   return (
     <Button
       type="primary"

@@ -5,6 +5,7 @@ import { theme } from "@/infra/config/theme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { App } from "./app";
+import "@/infra/config/i18n";
 
 const queryClient = new QueryClient();
 

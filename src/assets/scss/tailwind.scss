@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.root,
+:root,
+#root,
+#docs-root{
+  --width-sidebar: 240px;
+}

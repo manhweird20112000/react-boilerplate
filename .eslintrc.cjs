@@ -14,5 +14,48 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    'object-curly-spacing': ["error", "always"],
+    "indent": [
+      "error",
+      2
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "never"
+    ],
+    "arrow-spacing": [
+      "error",
+      {
+        "before": true,
+        "after": true
+      }
+    ],
+    "comma-dangle": [
+      "error"
+    ],
+    "space-before-function-paren": [
+      "error",
+      "always"
+    ],
+    "space-infix-ops": [
+      "error",
+      {
+        "int32Hint": false
+      }
+    ],
+    "no-var": "error",
+    "no-dupe-class-members": 2,
+    "no-dupe-keys": 2,
+    "no-duplicate-case": 2,
+    "no-empty-character-class": 2,
+    "no-empty-pattern": 2,
   },
 }

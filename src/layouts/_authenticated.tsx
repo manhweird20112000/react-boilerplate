@@ -9,8 +9,9 @@ export const Route = createFileRoute("/_authenticated")({
     location: { pathname: string };
   }) => {
     const { isLogged } = context.authentication;
+    console.log(isLogged())
     if (!isLogged()) {
-      if (location.pathname !== "login") {
+      if (location.pathname !== "/login") {
         throw redirect({ to: "/login" });
       }
     } else {

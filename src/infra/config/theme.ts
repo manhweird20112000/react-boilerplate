@@ -1,8 +1,7 @@
-import { ThemeConfig } from "antd";
+import { ThemeConfig } from 'antd'
 
 export const theme: ThemeConfig = {
   token: {
-    colorPrimary: "#00b96b",
-    borderRadius: 0,
-  },
-};
+    colorPrimary: '#00b96b'
+  }
+}

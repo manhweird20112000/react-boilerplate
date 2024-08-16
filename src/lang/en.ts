@@ -1,3 +1,3 @@
 export default {
-    "hello": "React Boilerplate"
+  'hello': 'React Boilerplate'
 }

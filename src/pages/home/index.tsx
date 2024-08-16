@@ -1,7 +1,11 @@
-import { useTranslation } from "react-i18next";
+import { useTranslate } from '@/hooks/use-translate'
 
-export default function HomePage() {
-  const { t } = useTranslation();
 
-  return t("hello");
+export default function HomePage () {
+
+  const { translate } = useTranslate()
+
+  return <div>
+    <h1>{translate('hello')}</h1>
+  </div>
 }

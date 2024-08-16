@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import type { MenuTheme } from "antd/es/menu/MenuContext";
+import { create } from 'zustand'
+import type { MenuTheme } from 'antd/es/menu/MenuContext'
 
 type State = {
     theme: MenuTheme
@@ -10,8 +10,8 @@ type Action = {
 }
 
 export const useAppStore = create<State & Action>((setState) => ({
-    theme: 'light',
-    setTheme(val: MenuTheme) {
-        setState((state) => ({ ...state, theme: val }))
-    }
+  theme: 'light',
+  setTheme (val: MenuTheme) {
+    setState((state) => ({ ...state, theme: val }))
+  }
 }))

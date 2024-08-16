@@ -6,4 +6,4 @@ declare global {
     name: string;
   }
 }
-export {};
+export {}

@@ -1,6 +1,7 @@
-import { HomeLayout } from "@/components/partials";
-import { createRootRouteWithContext } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { createRootRouteWithContext } from '@tanstack/react-router'
+import { TanStackRouterDevtools } from '@tanstack/router-devtools'
+
+import { HomeLayout } from '@/components/partials'
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => (
@@ -8,5 +9,5 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       <HomeLayout />
       <TanStackRouterDevtools />
     </>
-  ),
-});
+  )
+})

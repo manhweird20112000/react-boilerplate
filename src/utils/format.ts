@@ -1,3 +1,3 @@
 export const formatMoney = () => {
-    console.log('----------')
+  console.log('----------')
 }

@@ -57,5 +57,6 @@ module.exports = {
     "no-duplicate-case": 2,
     "no-empty-character-class": 2,
     "no-empty-pattern": 2,
+    "@typescript-eslint/no-explicit-any": 0
   },
 }

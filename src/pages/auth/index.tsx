@@ -1,12 +1,12 @@
-import { Button } from "antd";
+import { Button } from 'antd'
 
-export default function AuthPage() {
+export default function AuthPage () {
   return (
     <Button
       type="primary"
-      onClick={() => localStorage.setItem("isAuthenticated", "true")}
+      onClick={() => localStorage.setItem('isAuthenticated', 'true')}
     >
       Login
     </Button>
-  );
+  )
 }

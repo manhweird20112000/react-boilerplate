@@ -1,8 +1,8 @@
-import { createLazyFileRoute } from "@tanstack/react-router";
-import React from "react";
+import { createLazyFileRoute } from '@tanstack/react-router'
+import React from 'react'
 
-const BlogDetailPage = React.lazy(() => import("@/pages/blogs/detail"));
+const BlogDetailPage = React.lazy(() => import('@/pages/blogs/detail'))
 
-export const Route = createLazyFileRoute("/_authenticated/blogs/$blogId")({
-  component: BlogDetailPage,
-});
+export const Route = createLazyFileRoute('/_authenticated/blogs/$blogId')({
+  component: BlogDetailPage
+})

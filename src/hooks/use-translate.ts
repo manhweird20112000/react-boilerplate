@@ -19,7 +19,7 @@ type RecursiveKeyOf<TObj extends object> = {
     [TKey in keyof TObj & (string | number)]: RecursiveKeyOfHandleValue<TObj[TKey], `${TKey}`>
 }[keyof TObj & (string | number)]
 
-type TxKeyPath = RecursiveKeyOf<Translations>
+export type TxKeyPath = RecursiveKeyOf<Translations>
 
 
 export function useTranslate (){

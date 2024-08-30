@@ -1,0 +1,9 @@
+.form{
+  &--field{
+    & > .ant-form-item-row{
+      & .ant-form-item-label{
+        @apply p-0 #{!important};
+      }
+    }
+  }
+}

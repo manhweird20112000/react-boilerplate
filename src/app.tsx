@@ -10,5 +10,6 @@ const router = createRouter({
 
 export function App () {
   const authentication = useAuth()
+
   return <RouterProvider router={router} context={{ authentication }} />
 }
